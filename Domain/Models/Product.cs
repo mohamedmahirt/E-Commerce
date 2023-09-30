@@ -6,9 +6,47 @@ using System.Threading.Tasks;
 
 namespace Shopbridge_base.Domain.Models
 {
-    public class Product
+    public class Product : NamedEntity
     {
-        [Key]
-        public int Product_Id { get; set; }
+        public int CategoryId
+        {
+            get;
+            set;
+        }
+        public Category Category
+        {
+            get;
+            set;
+        }
+        public string ProductCode
+        {
+            get;
+            set;
+        }
+        public decimal PurchaseAmount
+        {
+            get;
+            set;
+        }
+        public decimal SaleAmount
+        {
+            get;
+            set;
+        }
+        public string Color
+        {
+            get;
+            set;
+        }
+        public string Caption
+        {
+            get;
+            set;
+        }
+        public bool IsFeatured
+        {
+            get;
+            set;
+        }
     }
 }
