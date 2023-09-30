@@ -13,11 +13,10 @@ namespace Shopbridge_base.Data.Repository
         //IQueryable<T> Get<T>(params Expression<Func<T, object>>[] navigationProperties) where T : class;
         //IQueryable<T> Get<T>(Expression<Func<T, bool>> where, params Expression<Func<T, object>>[] navigationProperties) where T : class;
         //IEnumerable<T> Get<T>() where T : class;
-        IEnumerable<T> GetAll();
-        T GetById(object id);
-        void Insert(T obj);
-        void Update(T obj);
-        void Delete(int Entity);
-        void Save();
+        Task<List<T>> GetAll();
+        Task<T> GetById(object id);
+        Task<bool> Insert(T obj);
+        Task<bool> Update(T obj);
+        Task<bool> Delete(int Entity);
     }
 }

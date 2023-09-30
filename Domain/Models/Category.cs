@@ -9,9 +9,5 @@ namespace Shopbridge_base.Domain.Models
             get;
             set;
         }
-        public ICollection<Product> Products
-        {
-            get;
-        }
     }
 }

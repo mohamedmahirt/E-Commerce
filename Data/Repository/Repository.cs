@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace Shopbridge_base.Data.Repository
@@ -20,50 +21,61 @@ namespace Shopbridge_base.Data.Repository
             entities = context.Set<T>();
         }
        
-        public IEnumerable<T> GetAll()
+        public async Task<List<T>> GetAll()
         {
-            return entities.AsEnumerable();
+            return  await this.entities.ToListAsync();
         }
 
-        public void Insert(T obj)
+        public async Task<bool> Insert(T obj)
         {
             if (obj == null)
             {
                 throw new ArgumentNullException("obj");
             }
             entities.Add(obj);
-            context.SaveChanges();
+            var count = await this.context.SaveChangesAsync();
+            if (count > 0)
+            {
+                return false;
+            }
+            return true;
         }
 
-        public void Update(T obj)
+        public async Task<bool> Update(T obj)
         {
             if (obj == null)
             {
-                throw new ArgumentNullException("obj");
+                return false;
             }
-            context.SaveChanges();
+            entities.Update(obj);
+            var count = await this.context.SaveChangesAsync();
+            if (count > 0)
+            {
+                return false;
+            }
+            return true;
         }
 
-        public void Delete(int entity)
+        public async Task<bool> Delete(int entity)
         {
             if (entity == 0)
             {
                 throw new ArgumentNullException("entity");
             }
-            T existing = entities.Find(entity);
+            T existing = await entities.FindAsync(entity);
             entities.Remove(existing);
-            context.SaveChanges();
+            var count= await this.context.SaveChangesAsync();
+            if (count > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+        public async Task<T> GetById(object id)
+        {
+            return await this.entities.FindAsync(id);
         }
 
-        public void Save()
-        {
-            throw new NotImplementedException();
-        }
-
-        public T GetById(object id)
-        {
-            return entities.Find(id);
-        }
         //public IQueryable<T> AsQueryable<T>() where T : class
         //{
         //    throw new NotImplementedException();

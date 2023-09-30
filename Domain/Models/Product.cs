@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,11 +9,13 @@ namespace Shopbridge_base.Domain.Models
 {
     public class Product : NamedEntity
     {
+        
         public int CategoryId
         {
             get;
             set;
         }
+        [ForeignKey("CategoryId")]
         public Category Category
         {
             get;
@@ -44,6 +47,11 @@ namespace Shopbridge_base.Domain.Models
             set;
         }
         public bool IsFeatured
+        {
+            get;
+            set;
+        }
+        public DateTime ModifiedDate
         {
             get;
             set;

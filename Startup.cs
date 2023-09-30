@@ -18,6 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using Shopbridge_base.Data;
 using Shopbridge_base.Domain.Services.Interfaces;
 using Shopbridge_base.Domain.Services;
+using Shopbridge_base.Data.Repository;
 
 namespace Shopbridge_base
 {
@@ -41,11 +42,20 @@ namespace Shopbridge_base
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Shopbridge_base", Version = "v1" });
             });
-
-            services.AddDbContext<Shopbridge_Context>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("Shopbridge_Context")));
+            //services.AddDbContext<Shopbridge_Context>(options =>
+            //{
+            //    options.UseMySql(this.Configuration.GetConnectionString("APPDbContext"));
+            //});
+            services.AddDbContextPool<Shopbridge_Context>(options =>
+            {
+                var connetionString = Configuration.GetConnectionString("APPDbContext");
+                options.UseMySql(connetionString, ServerVersion.AutoDetect(connetionString));
+            });
+            //services.AddDbContext<Shopbridge_Context>(options =>
+            //        options.UseSqlServer(Configuration.GetConnectionString("Shopbridge_Context")));
 
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

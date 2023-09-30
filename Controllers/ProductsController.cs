@@ -27,7 +27,9 @@ namespace Shopbridge_base.Controllers
         [HttpGet]   
         public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
         {
-            return NoContent();
+            var products = await this.productService.Products();
+
+            return Ok(products);
         }
 
         
