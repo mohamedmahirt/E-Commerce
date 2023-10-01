@@ -37,7 +37,7 @@ namespace Shopbridge_base.Domain.Services
         {
             try
             {
-               await repoProduct.Delete(productId);
+                await repoProduct.Delete(productId);
                 return true;
             }
             catch (Exception ex)
@@ -58,27 +58,11 @@ namespace Shopbridge_base.Domain.Services
 
         public async Task<bool> Update(Product model)
         {
-            Product product =await repoProduct.GetById(model.Id);
-            if (product != null)
-            {
-                product.Name = model.Name;
-                product.Description = model.Description;
-                product.CategoryId = model.CategoryId;
-                product.Caption = model.Caption;
-                product.ProductCode = model.ProductCode;
-                product.Color = model.Color;
-                product.IsActive = model.IsActive;
-                product.SaleAmount = model.SaleAmount;
-                product.IsFeatured = model.IsFeatured;
-                product.PurchaseAmount = model.PurchaseAmount;
-                product.ModifiedDate = DateTime.UtcNow;
-                await repoProduct.Update(product);
+            var response = await repoProduct.Update(model);
+            if (response)
                 return true;
-            }
             else
-            {
                 return false;
-            }
         }
     }
 }

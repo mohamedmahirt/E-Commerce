@@ -16,7 +16,7 @@ namespace Shopbridge_base.Domain.Models
             set;
         }
         [ForeignKey("CategoryId")]
-        public Category Category
+        public virtual Category Category
         {
             get;
             set;

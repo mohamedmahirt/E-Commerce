@@ -36,13 +36,49 @@ namespace Shopbridge_base.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
-            return NoContent();
+            if(id > 0)
+            {
+                var products = await this.productService.GetProduct(id);
+                if(products == null)
+                {
+                    return NoContent();
+                }
+                return Ok(products);
+            }
+            else
+            {
+                return BadRequest();
+            }
+           
         }
 
        
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduct(int id, Product product)
         {
+            var products = await this.productService.GetProduct(id);
+            if (products != null)
+            {
+                products.Name = product.Name;
+                products.Description = product.Description;
+                products.CategoryId = product.CategoryId;
+                products.Caption = product.Caption;
+                products.ProductCode = product.ProductCode;
+                products.Color = product.Color;
+                products.IsActive = product.IsActive;
+                products.SaleAmount = product.SaleAmount;
+                products.IsFeatured = product.IsFeatured;
+                products.PurchaseAmount = product.PurchaseAmount;
+                products.ModifiedDate = DateTime.UtcNow;
+                var response = await this.productService.Update(products);
+                if(response)
+                {
+                    return Ok("Updated Successfully");
+                }
+                else { 
+                    return BadRequest(); 
+                }
+            }
             return NoContent();
         }
 
@@ -50,6 +86,11 @@ namespace Shopbridge_base.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
+            var response = await this.productService.Create(product);
+            if(response)
+            {
+                return Ok("Product Added Successfully");
+            }
             return NoContent();
         }
 
@@ -57,6 +98,14 @@ namespace Shopbridge_base.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
+            if (id > 0)
+            {
+                var response = await this.productService.Delete(id);
+                if (response)
+                {
+                    return Ok("Deleted Successfully");
+                }
+            }
             return NoContent();
         }
 

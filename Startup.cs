@@ -19,6 +19,7 @@ using Shopbridge_base.Data;
 using Shopbridge_base.Domain.Services.Interfaces;
 using Shopbridge_base.Domain.Services;
 using Shopbridge_base.Data.Repository;
+using Shopbridge_base.Domain.Services.Implementations;
 
 namespace Shopbridge_base
 {
@@ -55,6 +56,7 @@ namespace Shopbridge_base
             //        options.UseSqlServer(Configuration.GetConnectionString("Shopbridge_Context")));
 
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         }
 
