@@ -36,9 +36,9 @@ namespace Shopbridge_base.Data.Repository
             var count = await this.context.SaveChangesAsync();
             if (count > 0)
             {
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
 
         public async Task<bool> Update(T obj)
@@ -51,9 +51,9 @@ namespace Shopbridge_base.Data.Repository
             var count = await this.context.SaveChangesAsync();
             if (count > 0)
             {
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
 
         public async Task<bool> Delete(int entity)

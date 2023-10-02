@@ -56,6 +56,10 @@ namespace Shopbridge_base.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduct(int id, Product product)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid model object");
+            }
             var products = await this.productService.GetProduct(id);
             if (products != null)
             {
@@ -86,6 +90,10 @@ namespace Shopbridge_base.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid model object");
+            }
             var response = await this.productService.Create(product);
             if(response)
             {

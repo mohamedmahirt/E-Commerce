@@ -5,6 +5,7 @@ using Shopbridge_base.Domain.Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
+using Microsoft.VisualStudio.Web.CodeGeneration;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -54,6 +55,10 @@ namespace Shopbridge_base.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCategory(int id, Category category)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid model object");
+            }
             var categorys = await this.categoryService.GetCategory(id);
             if (categorys != null)
             {
@@ -78,6 +83,10 @@ namespace Shopbridge_base.Controllers
         [HttpPost]
         public async Task<ActionResult<Category>> PostCategory(Category category)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid model object");
+            }
             var response = await this.categoryService.Create(category);
             if (response)
             {

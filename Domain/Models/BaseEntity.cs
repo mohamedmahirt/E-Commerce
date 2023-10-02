@@ -9,7 +9,7 @@ namespace Shopbridge_base.Domain.Models
     {
         [Key]
         public virtual int Id { get; set; }
-
+        [DataType(DataType.Date)]
         public virtual DateTime CreatedOn { get; set; }
 
         public virtual bool IsActive { get; set; }

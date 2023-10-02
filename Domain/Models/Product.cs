@@ -9,7 +9,7 @@ namespace Shopbridge_base.Domain.Models
 {
     public class Product : NamedEntity
     {
-        
+        [Required]
         public int CategoryId
         {
             get;
@@ -21,16 +21,22 @@ namespace Shopbridge_base.Domain.Models
             get;
             set;
         }
+        [Required(ErrorMessage = "ProductCode is required")]
+        [StringLength(200, ErrorMessage = "ProductCode can't be longer than 100 characters")]
         public string ProductCode
         {
             get;
             set;
         }
+        [Required]
+        [Range(0, 99999.99)]
         public decimal PurchaseAmount
         {
             get;
             set;
         }
+        [Required]
+        [Range(0, 999999.99)]
         public decimal SaleAmount
         {
             get;
@@ -51,10 +57,11 @@ namespace Shopbridge_base.Domain.Models
             get;
             set;
         }
+        [DataType(DataType.Date)]
         public DateTime ModifiedDate
         {
             get;
             set;
-        }
+        } = DateTime.Now;
     }
 }
